@@ -1,0 +1,9 @@
+back2/
+backup/
+__pycache__/
+*.pyc
+*.png
+*.jpg
+configBACK.py
+*.swp
+*.txt
