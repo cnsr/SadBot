@@ -53,7 +53,7 @@ def post_chat(body, chat, name=config.name, convo="General", trip="", file="" ):
         post_params.append(poster.encode.MultipartParam.from_file("image", file))
 
     datagen, headers = poster.encode.multipart_encode(post_params)
-    uri = 'https://sadchan.sytes.net/chat/'+chat
+    uri = config.site_url + 'chat/' + chat
     req = urllib2.Request(uri, datagen, headers)
     return opener.open(req)
 
@@ -67,10 +67,10 @@ def join_chat(chat_room):
 def display_chat(chat_obj):
     print(chat_obj["name"])
     print(chat_obj["body"])
-    print
+    
 
 def get_data(chat):
-    data_response = fetch('https://sadchan.sytes.net/data/'+chat)
+    data_response = fetch(config.site_url + 'data/' +chat)
     json_data = json.loads(data_response.read())
     for i in json_data[::-1]:
         display_chat(i)
@@ -87,7 +87,7 @@ def on_chat(*args):
         return
     msg = args[0]["name"]+"~ "
     if ("image" in args[0]):
-        filename = "https://sadchan.sytes.net/tmp/uploads/"+re.compile('[\w\-\.]*$').search(args[0]["image"]).group(0)
+        filename = config.site_url + "tmp/uploads/"+re.compile('[\w\-\.]*$').search(args[0]["image"]).group(0)
         msg += "file: "+filename+" "
     msg += (" ".join(args[0]["body"].splitlines()))
     livechanBot.sendMsg(channel, msg)
@@ -112,7 +112,7 @@ def login(callback=on_chat):
         login()
 
     global socketIO
-    socketIO = SocketIO('https://sadchan.sytes.net',
+    socketIO = SocketIO(config.site_url,
         cookies={'password_livechan': livechan_pass})
     socketIO.on('chat', callback)
     socketIO.on('request_location', on_request_location)
