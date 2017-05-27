@@ -10,7 +10,7 @@ import telebot
 import re
 import sys
 import random
-import config
+import configBACK as config
 from urllib2 import urlopen
 import hbot
 import requests
@@ -34,7 +34,7 @@ channel = sys.argv[1]
 #writes image on disk so it could be readen by api later
 def send_image(url):
 	url = url.replace('/home/ph/livechan-js/public/',
-	'https://sadchan.sytes.net/')
+	'https://kotchan.org/')
 	f = open('out.jpg','wb')
 	f.write(urllib2.urlopen(url).read())
 	f.close()

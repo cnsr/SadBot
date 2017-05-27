@@ -5,7 +5,7 @@ import re
 from socketIO_client import SocketIO
 import json
 import thread
-import config
+import configBACK as config
 
 cookies = cookielib.LWPCookieJar()
 
@@ -53,7 +53,7 @@ def post_chat(body, chat, name=config.name, convo="General", trip="", file="" ):
         post_params.append(poster.encode.MultipartParam.from_file("image", file))
 
     datagen, headers = poster.encode.multipart_encode(post_params)
-    uri = 'https://sadchan.sytes.net/chat/'+chat
+    uri = 'https://kotchan.org/chat/'+chat
     req = urllib2.Request(uri, datagen, headers)
     return opener.open(req)
 
@@ -70,7 +70,7 @@ def display_chat(chat_obj):
     print
 
 def get_data(chat):
-    data_response = fetch('https://sadchan.sytes.net/data/'+chat)
+    data_response = fetch('https://kotchan.org/data/'+chat)
     json_data = json.loads(data_response.read())
     for i in json_data[::-1]:
         display_chat(i)
@@ -87,7 +87,7 @@ def on_chat(*args):
         return
     msg = args[0]["name"]+"~ "
     if ("image" in args[0]):
-        filename = "https://sadchan.sytes.net/tmp/uploads/"+re.compile('[\w\-\.]*$').search(args[0]["image"]).group(0)
+        filename = "https://kotchan.org/tmp/uploads/"+re.compile('[\w\-\.]*$').search(args[0]["image"]).group(0)
         msg += "file: "+filename+" "
     msg += (" ".join(args[0]["body"].splitlines()))
     livechanBot.sendMsg(channel, msg)
@@ -101,7 +101,7 @@ def on_request_location(*args):
     socketIO.emit('subscribe', curr_chat_room);
 
 def login(callback=on_chat):
-    cookie = cookielib.Cookie(version=0, name='password_livechan', value=config.nolimitCookie, port=None, port_specified=False, domain='sadchan.sytes.net',
+    cookie = cookielib.Cookie(version=0, name='password_livechan', value=config.nolimitCookie, port=None, port_specified=False, domain='kotchan.org',
             domain_specified=False, domain_initial_dot=False,
             path='/', path_specified=True, secure=False, expires=None,
             discard=True, comment=None, comment_url=None, rest={'HttpOnly': None}, rfc2109=False)
@@ -112,7 +112,7 @@ def login(callback=on_chat):
         login()
 
     global socketIO
-    socketIO = SocketIO('https://sadchan.sytes.net',
+    socketIO = SocketIO('https://kotchan.org',
         cookies={'password_livechan': livechan_pass})
     socketIO.on('chat', callback)
     socketIO.on('request_location', on_request_location)
