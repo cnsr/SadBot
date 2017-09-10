@@ -5,7 +5,7 @@ import re
 from socketIO_client import SocketIO
 import json
 import thread
-import configBACK as config
+import config
 
 cookies = cookielib.LWPCookieJar()
 

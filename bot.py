@@ -10,7 +10,7 @@ import telebot
 import re
 import sys
 import random
-import configBACK as config
+import config
 from urllib2 import urlopen
 import hbot
 import requests
@@ -103,14 +103,11 @@ def process_chat(*args):
 		help_msg = 'no help message defined'
 		
 		#for those who don't have names
-		if name == '' or name == 'Anonymous' or len(name) == 1:
-			if ident not in users_dict.users:
-				name = "<-" + country + '->'
-			else:
-				name = users_dict.users[ident]
+		if ident not in users_dict.users:
+			name += " | " + country
 		
 		#gets weather, sometimes off
-		wreq = re.compile('\.hweather( (.+))?').match(message)
+		wreq = re.compile('\@weather( (.+))?').match(message)
 		if wreq:
 			answer = ''
 			try:
@@ -134,15 +131,15 @@ def process_chat(*args):
 humidity: {3}%\nweather: {4}').format(loc, tC, tF, hum, status)
 			except Exception as e:
 				print(e)
-				answer = 'error occured while parsing your request, check spelling'
+				answer = 'error occured while parsing your request, check spelling and make sure you entered location'
 			out_msg = '>>' + count + '\n' + answer
 			post_chat(out_msg, channel, name = config.name,trip = config.Trip,convo = 'General', file = '')
 		
 		#gets time
 		#THIS DOESNT FUCKING WORK IN A SEPARATE FILE
-		if re.match(message,'.htime') and message !='':
-			out_msg = out_msg = '>>' + count + '\n' + get_time()
-			post_chat(out_msg, channel, name = config.name,trip = config.Trip,convo = 'General', file = '')
+		#if re.match(message,'.htime') and message !='':
+		#	out_msg = out_msg = '>>' + count + '\n' + get_time()
+		#	post_chat(out_msg, channel, name = config.name,trip = config.Trip,convo = 'General', file = '')
 		
 		#bot commands
 		#YES STEF THIS IS THE WAY IT SHOULD FUCKING BE NO FUCKING CALLBACK FUNCS
@@ -174,21 +171,25 @@ humidity: {3}%\nweather: {4}').format(loc, tC, tF, hum, status)
 			else:
 				out_image = ''
 			
-			msg = name + ":\n" + message
+			msg = str(count) + '| ' +  name + ":\n" + message
 			
 			#this doesnt work smh
-			subname = config.name.split('#');
-			if name != config.name and name != subname[0]:
-				if out_image != '':
-					send_image(out_image)
-					img = open('out.jpg', 'rb')
-					tbot.send_photo(config.user_id, img)
-					img.close()
-				tbot.send_message(config.user_id, msg)
-				print(msg)
-				
+			try:
+				subname = config.name.split('#');
+				if name != config.name and name != subname[0]:
+					if out_image != '':
+						send_image(out_image)
+						img = open('out.jpg', 'rb')
+						tbot.send_photo(config.user_id, img)
+						img.close()
+					tbot.send_message(config.user_id, msg)
+					# print(msg)
+			except Exception as e:
+				ree = '----------\n' + str(e) + '\n-----------'
+				tbot.send_message(config.user_id, ree)
 	except Exception as e:
-		print(e)
+		print('Exception' + str(e))
+#		print(e)
 		
 #i guess this is better to have than not to?		
 try:	
@@ -196,6 +197,7 @@ try:
 	join_chat(channel)
 	print('Joined chat')
 	#init msg to make bot work
+	#it doesnt smh lel
 	tbot.send_message(config.user_id, 'Joined chat.')
 except Exception as e:
 	print("Connection failed. Error message:")

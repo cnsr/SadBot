@@ -19,7 +19,6 @@ answers = {
 '.habout':'This bot is completely random because it might work but also might not.',
 '.hdate':get_time3(),
 '.htimeK':get_time2(),
-'.ekb':'cuck and oligarch',
-'.oligarch':'ekb',
-'.jews':'shut it down goyims know'
+'^.jews$':'shut it down goyims know',
+'^.hohol$':'should kill himself tbh',
 }
