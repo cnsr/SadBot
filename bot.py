@@ -186,6 +186,8 @@ def process_chat(*args):
         if convo == "General":
             if "image" in args[0].keys():
                 out_image = args[0]["image"]
+                if args[0]["image_filename"].startswith('anna'):
+                    out_image = ''
             else:
                 out_image = ''
 
