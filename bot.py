@@ -48,10 +48,10 @@ def send_image(url):
     f.close()
 
 
-def send_ogg(url):
+def send_file(url, extension):
     url = url.replace('/home/ph/livechan-js/public/',
                       'https://kotchan.org/')
-    f = open('out.ogg', 'wb')
+    f = open('out' + extension, 'wb')
     f.write(urllib2.urlopen(url).read())
     f.close()
 
@@ -201,10 +201,20 @@ def process_chat(*args):
                         tbot.send_photo(config.user_id, img)
                         img.close()
                     if extension == '.ogg':
-                        send_ogg(out_image)
+                        send_file(out_image, extension)
                         ogg = open('out.ogg', 'rb')
                         tbot.send_voice(config.user_id, ogg)
                         ogg.close()
+                    if extension == '.gif':
+                        send_file(out_image, extension)
+                        gif = open('out.gif', 'rb')
+                        tbot.send_document(config.user_id, gif)
+                        gif.close()
+                    if extension == '.mp4':
+                        send_file(out_image, extension)
+                        video = open('out.mp4', 'rb')
+                        tbot.send_video(config.user_id, video)
+                        video.close()
                 # print(msg)
             except Exception as e:
                 ree = '----------\n' + str(e) + '\n-----------'
