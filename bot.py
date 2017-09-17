@@ -18,6 +18,7 @@ import requests
 import pyowm
 import urllib
 from bs4 import BeautifulSoup, Comment
+import randomcat
 
 tbot = telebot.TeleBot(config.token)
 nsfw = False
@@ -84,6 +85,12 @@ def process_chat(*args):
             extension = ''
         # print(country)
         # print(ident)
+
+
+        if re.match('^.kit$', message):
+            f = randomcat.cat()
+            post_chat('>>' + count, channel, name=config.name, trip=config.Trip, convo='General', file=f)
+
 
         def get_time():
             c = ''
