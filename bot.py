@@ -91,6 +91,12 @@ def process_chat(*args):
             f = randomcat.cat()
             post_chat('>>' + count, channel, name=config.name, trip=config.Trip, convo='General', file=f)
 
+        if re.match('^.8ball', message):
+            random.shuffle(hbot.ball)
+            mesg = random.choice(hbot.ball)
+            post_chat('>>' + count + '\n' + mesg, channel, name=config.name, trip=config.Trip,
+                        convo='General', file='')
+
 
         def get_time():
             c = ''
