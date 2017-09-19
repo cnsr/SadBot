@@ -2,10 +2,14 @@
 sadchan telegram connection bot,
 based on livechan api and anna bot
 
-Installation:
-requires python 2
+### Installation
 configure config.py
 ```sh
 $ pip install -r requirements.txt
 $ python bot.py int
+```
+where int stands for board name.
+To use bot in nsfw mode, start it with
+```sh
+$ python bot.py int nsfw
 ```
