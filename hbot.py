@@ -24,10 +24,10 @@ def get_time2():
 
 
 answers = {
-'^.hbot$': 'Welcome to hohilbot, this message is really helpful.',
-'^.habout$': 'This bot is completely random because it might work but also might not.',
-'^.hdate$': get_time3(),
-'^.htimeK$': get_time2(),
-'^.jews$': 'shut it down goyim know',
-'^.hohol$': 'should kill himself tbh',
+'^[.]hbot$': 'Welcome to hohilbot, this message is really helpful.',
+'^[.]habout$': 'This bot is completely random because it might work but also might not.',
+'^[.]hdate$': get_time3(),
+'^[.]htimeK$': get_time2(),
+'^[.]jews$': 'shut it down goyim know',
+'^[.]hohol$': 'should kill himself tbh',
 }

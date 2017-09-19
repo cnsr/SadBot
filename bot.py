@@ -87,11 +87,11 @@ def process_chat(*args):
         # print(ident)
 
 
-        if re.match('^.kit$', message):
+        if re.match('^[.]kit$', message):
             f = randomcat.cat()
             post_chat('>>' + count, channel, name=config.name, trip=config.Trip, convo='General', file=f)
 
-        if re.match('^.8ball', message):
+        if re.match('^[.]8ball', message):
             random.shuffle(hbot.ball)
             mesg = random.choice(hbot.ball)
             post_chat('>>' + count + '\n' + mesg, channel, name=config.name, trip=config.Trip,
