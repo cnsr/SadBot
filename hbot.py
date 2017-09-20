@@ -30,5 +30,5 @@ answers = {
 '^[.]htimeK$': get_time2(),
 '^[.]jews$': 'shut it down goyim know',
 '^[.]hohol$': 'should kill himself tbh',
-'^[.]re+': 'reeeeee',
+'^[.]ree+$': 'reeeeee',
 }
