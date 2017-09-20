@@ -87,17 +87,20 @@ def process_chat(*args):
         # print(ident)
 
 
+        # scrapes and returns a random cat image/gif from random.cat
         if re.match('^[.]kit$', message):
             f = randomcat.cat()
             post_chat('>>' + count, channel, name=config.name, trip=config.Trip, convo='General', file=f)
 
+
+        # returns one of many 8ball messages
         if re.match('^[.]8ball', message):
             random.shuffle(hbot.ball)
             mesg = random.choice(hbot.ball)
             post_chat('>>' + count + '\n' + mesg, channel, name=config.name, trip=config.Trip,
                         convo='General', file='')
 
-
+        # really shitty time scraper that is disabled right now btw
         def get_time():
             c = ''
             result = ''
@@ -131,9 +134,13 @@ def process_chat(*args):
             # prints result
             return 'Time in {0} is {1}'.format(city, result_time)
 
+
+        # in case it fucks up and sends empty message 
         help_msg = 'no help message defined'
 
+
         # gets weather, sometimes off
+        # could be cleaned up but i won't bother right now
         wreq = re.compile('\@weather( (.+))?').match(message)
         if wreq:
             answer = ''
@@ -163,26 +170,31 @@ def process_chat(*args):
             post_chat(out_msg, channel, name=config.name, trip=config.Trip,
                       convo='General', file='')
 
+
+        """
         # gets time
         # THIS DOESNT FUCKING WORK IN A SEPARATE FILE
-        # if re.match(message,'.htime') and message !='':
-        # out_msg = out_msg = '>>' + count + '\n' + get_time()
-        # post_chat(out_msg, channel, name = config.name,trip = config.Trip, convo = 'General', file = '')
+        if re.match(message,'.htime') and message !='':
+            out_msg = out_msg = '>>' + count + '\n' + get_time()
+            post_chat(out_msg, channel, name = config.name,trip = config.Trip, convo = 'General', file = '')
+        """
+
 
         # bot commands
-        # YES STEF THIS IS THE WAY IT SHOULD FUCKING BE NO FUCKING CALLBACK FUNCS
         for (k, v) in hbot.answers.iteritems():
             if re.match(k, message):
                 help_msg = hbot.answers[k]
                 out_msg = '>>' + count + '\n' + help_msg
-                post_chat(out_msg, channel, name=config.name, trip=config.Trip,
-                          convo='General', file='')
+                post_chat(out_msg, channel, name=config.name,
+                        trip=config.Trip,convo='General', file='')
+
 
         # handles text messages only, text + photo will only be handled as photo by next handler
         @tbot.message_handler(func=lambda incM: True)
         def handle_text(incM):
             post_chat(incM.text, channel, name=config.name, trip=config.Trip,
                       convo="General", file='')
+
 
         # only handles photos, doesnt work with text
         @tbot.message_handler(content_types=['photo', 'text'])
@@ -235,11 +247,11 @@ def process_chat(*args):
                 ree = '----------\n' + str(e) + '\n-----------'
                 tbot.send_message(config.user_id, ree)
     except Exception as e2:
-        print('Exception' + str(e2))
+        print('Exception e2: ' + str(e2))
         # print(e2)
 
 # i guess this is better to have than not to?
-try:	
+try:
     login(callback=process_chat)
     join_chat(channel)
     print('Joined chat')
