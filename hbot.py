@@ -11,7 +11,7 @@ ball = ['it is certain', 'it is decidedly so', 'without a doubt', 'yes definitel
             'cannot predict now', 'concentrate and ask again', "don't count on it",
             'my reply is no', 'my sources say no', 'outlook not so good', 'very doubtful',
             'you should kill yourself', 'literally fuck off', 'how am i supposed to know', 'idk',
-            'yeah, probably not',]
+            'yeah, probably not', 'haha faggot no of course']
 
 
 def get_time3():
@@ -30,4 +30,5 @@ answers = {
 '^[.]htimeK$': get_time2(),
 '^[.]jews$': 'shut it down goyim know',
 '^[.]hohol$': 'should kill himself tbh',
+'^[.]re+': 'reeeeee',
 }

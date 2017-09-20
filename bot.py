@@ -57,8 +57,6 @@ def send_file(url, extension):
     f.close()
 
 
-# used to check if user exists in separate file so you could add him if he doesnt
-
 base_url = 'http://www.worldtimeserver.com/current_time_in_'
 
 
@@ -69,7 +67,6 @@ class Opener(urllib.FancyURLopener):
 def process_chat(*args):
     # uncomment for debug:
     # print(args)
-    # just to ease finding this block in code
     try:
         # get vars from args
         ident = args[0]["identifier"]
@@ -79,13 +76,11 @@ def process_chat(*args):
         convo = args[0]["convo"]
         country_name = args[0]["country_name"]
         country = args[0]["country"]
+        # checks if file exists an gets the extension of it
         if "image" in args[0].keys():
             extension = os.path.splitext(args[0]["image"])[-1].lower()
         else:
             extension = ''
-        # print(country)
-        # print(ident)
-
 
         # scrapes and returns a random cat image/gif from random.cat
         if re.match('^[.]kit$', message):
@@ -173,14 +168,13 @@ def process_chat(*args):
 
         """
         # gets time
-        # THIS DOESNT FUCKING WORK IN A SEPARATE FILE
         if re.match(message,'.htime') and message !='':
             out_msg = out_msg = '>>' + count + '\n' + get_time()
             post_chat(out_msg, channel, name = config.name,trip = config.Trip, convo = 'General', file = '')
         """
 
 
-        # bot commands
+        # checks messages for bot commands
         for (k, v) in hbot.answers.iteritems():
             if re.match(k, message):
                 help_msg = hbot.answers[k]
@@ -221,6 +215,7 @@ def process_chat(*args):
             # this doesnt work smh
             try:
                 tbot.send_message(config.user_id, msg)
+                # will only send images if they exist and nsfw is off
                 if out_image != '' and not nsfw and extension != '':
                     if extension not in ['.webm', '.gif', '.ogg', '.mp3', '.mp4']:
                         send_image(out_image)
@@ -242,12 +237,12 @@ def process_chat(*args):
                         video = open('out.mp4', 'rb')
                         tbot.send_video(config.user_id, video)
                         video.close()
-                # print(msg)
             except Exception as e:
                 ree = '----------\n' + str(e) + '\n-----------'
                 tbot.send_message(config.user_id, ree)
     except Exception as e2:
         print('Exception e2: ' + str(e2))
+        print(str(count) + msg)
         # print(e2)
 
 # i guess this is better to have than not to?
@@ -263,6 +258,7 @@ except Exception as e:
     print(e)
 
 # makes bot work and tbot polls endlessly(at least while no errors occur)
+# and they do a lot
 while 1:
     sleep(3)
     tbot.polling(none_stop=True)
