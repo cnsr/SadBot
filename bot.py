@@ -86,14 +86,7 @@ def process_chat(*args):
         # scrapes and returns a random cat image/gif from random.cat
         if re.match('^[.]kit$', message):
             msg = '>>' + count
-            # command = random.choice[randomcat.cat, imgur.cat, randomcat.cat, randomcat.cat]
             f = random.choice([rkot, rkit, rkot])()
-            """
-            f, m = command()
-            if m != '':
-                msg += '\n' + m
-            """
-#            f = command()
             post_chat(msg, channel, name=config.name, trip=config.Trip, convo='General', file=f)
 
         # returns one of many 8ball messages
