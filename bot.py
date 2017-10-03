@@ -18,7 +18,8 @@ import requests
 import pyowm
 import urllib
 from bs4 import BeautifulSoup, Comment
-import randomcat
+from randomcat import cat as rkot
+from imgur import cat as rkit
 
 tbot = telebot.TeleBot(config.token)
 nsfw = False
@@ -84,16 +85,23 @@ def process_chat(*args):
 
         # scrapes and returns a random cat image/gif from random.cat
         if re.match('^[.]kit$', message):
-            f = randomcat.cat()
-            post_chat('>>' + count, channel, name=config.name, trip=config.Trip, convo='General', file=f)
-
+            msg = '>>' + count
+            # command = random.choice[randomcat.cat, imgur.cat, randomcat.cat, randomcat.cat]
+            f = random.choice([rkot, rkit, rkot])()
+            """
+            f, m = command()
+            if m != '':
+                msg += '\n' + m
+            """
+#            f = command()
+            post_chat(msg, channel, name=config.name, trip=config.Trip, convo='General', file=f)
 
         # returns one of many 8ball messages
         if re.match('^[.]8ball', message):
             random.shuffle(hbot.ball)
             mesg = random.choice(hbot.ball)
             post_chat('>>' + count + '\n' + mesg, channel, name=config.name, trip=config.Trip,
-                        convo='General', file='')
+                      convo='General', file='')
 
         # really shitty time scraper that is disabled right now btw
         def get_time():
@@ -129,10 +137,8 @@ def process_chat(*args):
             # prints result
             return 'Time in {0} is {1}'.format(city, result_time)
 
-
         # in case it fucks up and sends empty message 
         help_msg = 'no help message defined'
-
 
         # gets weather, sometimes off
         # could be cleaned up but i won't bother right now
@@ -173,7 +179,6 @@ def process_chat(*args):
             post_chat(out_msg, channel, name = config.name,trip = config.Trip, convo = 'General', file = '')
         """
 
-
         # checks messages for bot commands
         for (k, v) in hbot.answers.iteritems():
             if re.match(k, message):
@@ -182,13 +187,11 @@ def process_chat(*args):
                 post_chat(out_msg, channel, name=config.name,
                         trip=config.Trip,convo='General', file='')
 
-
         # handles text messages only, text + photo will only be handled as photo by next handler
         @tbot.message_handler(func=lambda incM: True)
         def handle_text(incM):
             post_chat(incM.text, channel, name=config.name, trip=config.Trip,
                       convo="General", file='')
-
 
         # only handles photos, doesnt work with text
         @tbot.message_handler(content_types=['photo', 'text'])

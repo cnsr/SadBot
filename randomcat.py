@@ -11,4 +11,3 @@ def cat():
     urllib.urlretrieve(link, extreturn)
     return extreturn
 
-cat()
