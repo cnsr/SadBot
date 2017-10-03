@@ -18,7 +18,5 @@ def cat():
     ext = kit.split('.')[-1]
     extreturn = 'kit.' + ext
     urllib.urlretrieve(kit, extreturn)
-    print(kit)
-    print(extreturn)
     return extreturn
 
