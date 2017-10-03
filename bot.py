@@ -238,8 +238,6 @@ def process_chat(*args):
                 tbot.send_message(config.user_id, ree)
     except Exception as e2:
         print('Exception e2: ' + str(e2))
-        print(str(count) + msg)
-        # print(e2)
 
 # i guess this is better to have than not to?
 try:
