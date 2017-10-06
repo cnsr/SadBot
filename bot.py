@@ -20,6 +20,7 @@ import urllib
 from bs4 import BeautifulSoup, Comment
 from randomcat import cat as rkot
 from imgur import cat as rkit
+import weather2 as wttr
 
 tbot = telebot.TeleBot(config.token)
 nsfw = False
@@ -43,7 +44,7 @@ except IndexError:
 
 # writes image on disk so it could be read by api later
 def send_image(url):
-    url = url.replace('/home/ph/livechan-js/public/',
+    url = url.replace('/home/ph/livechan-js/',
                       'https://kotchan.org/')
     f = open('out.jpg', 'wb')
     f.write(urllib2.urlopen(url).read())
@@ -137,6 +138,20 @@ def process_chat(*args):
         # could be cleaned up but i won't bother right now
         wreq = re.compile('\@weather( (.+))?').match(message)
         if wreq:
+            try:
+                w = wreq.group(2)
+                if not w:
+                    w = country_name
+                wttr.weather(w)
+                msg = 'Weather in ' + w
+                post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip,
+                      convo='General', file='weather.png')
+            except Exception as e:
+                print(str(e))
+
+
+        """
+        if wreq:
             answer = ''
             try:
                 wr = wreq.group(2)
@@ -165,6 +180,7 @@ def process_chat(*args):
                       convo='General', file='')
 
 
+        """
         """
         # gets time
         if re.match(message,'.htime') and message !='':
