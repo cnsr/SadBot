@@ -24,6 +24,9 @@ import weather2 as wttr
 
 tbot = telebot.TeleBot(config.token)
 nsfw = False
+gets = [499999, 555554, 599999, 666665, 696968, 699999, 777776,
+        799999, 888887, 899999, 999998, 999999, 1000000]
+
 
 # if you don't input channel to connect to
 if len(sys.argv) < 2:
@@ -133,6 +136,10 @@ def process_chat(*args):
         # in case it fucks up and sends empty message 
         help_msg = 'no help message defined'
 
+        # get stealer
+        if count in gets:
+            post_chat('reee get', channel, name=config.name, trip=config.Trip,
+                        convo='General', file='')
         # gets weather, sometimes off
         # could be cleaned up but i won't bother right now
         wreq = re.compile('\@weather( (.+))?').match(message)
