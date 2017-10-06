@@ -44,7 +44,7 @@ except IndexError:
 
 # writes image on disk so it could be read by api later
 def send_image(url):
-    url = url.replace('/home/ph/livechan-js/',
+    url = url.replace('/home/ph/livechan-js/public/',
                       'https://kotchan.org/')
     f = open('out.jpg', 'wb')
     f.write(urllib2.urlopen(url).read())
