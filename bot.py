@@ -29,7 +29,6 @@ nsfw = False
 if len(sys.argv) < 2:
     print("Usage: python bot.py [channel]")
     exit()
-
 # if you did it just werks
 channel = sys.argv[1]
 
@@ -142,7 +141,10 @@ def process_chat(*args):
                 w = wreq.group(2)
                 if not w:
                     w = country_name
-                wttr.weather(w)
+                if re.match('us', country[:2].lower()):
+                    wttr.weather(w, murrica=False)
+                else:
+                    wttr.weather(w)
                 msg = 'Weather in ' + w
                 post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip,
                       convo='General', file='weather.png')
