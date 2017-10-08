@@ -24,9 +24,6 @@ import weather2 as wttr
 
 tbot = telebot.TeleBot(config.token)
 nsfw = False
-gets = [499999, 555554, 599999, 666665, 696968, 699999, 777776,
-        799999, 888887, 899999, 999998, 999999, 1000000]
-
 
 # if you don't input channel to connect to
 if len(sys.argv) < 2:
@@ -96,8 +93,7 @@ def process_chat(*args):
         if re.match('^[.]8ball', message):
             random.shuffle(hbot.ball)
             mesg = random.choice(hbot.ball)
-            post_chat('>>' + count + '\n' + mesg, channel, name=config.name, trip=config.Trip,
-                      convo='General', file='')
+            post_chat('>>' + count + '\n' + mesg, channel, name=config.name, trip=config.Trip, convo='General', file='')
 
         # really shitty time scraper that is disabled right now btw
         def get_time():
@@ -136,10 +132,6 @@ def process_chat(*args):
         # in case it fucks up and sends empty message 
         help_msg = 'no help message defined'
 
-        # get stealer
-        if count in gets:
-            post_chat('reee get', channel, name=config.name, trip=config.Trip,
-                        convo='General', file='')
         # gets weather, sometimes off
         # could be cleaned up but i won't bother right now
         wreq = re.compile('\@weather( (.+))?').match(message)
@@ -157,45 +149,6 @@ def process_chat(*args):
                       convo='General', file='weather.png')
             except Exception as e:
                 print(str(e))
-
-
-        """
-        if wreq:
-            answer = ''
-            try:
-                wr = wreq.group(2)
-                # setting up weather
-                random.shuffle(config.weatherapikeys)
-                apikey = random.choice(config.weatherapikeys)
-                owm = pyowm.OWM(apikey)
-                obs = owm.weather_at_place(wr)
-                w = obs.get_weather()
-                # gets all variables
-                location = obs.get_location()
-                loc = location.get_name()
-                tempC = w.get_temperature('celsius')
-                tempF = w.get_temperature('fahrenheit')
-                tC = str(tempC['temp'])
-                tF = str(tempF['temp'])
-                hum = str(w.get_humidity())
-                status = w.get_detailed_status()
-                answer = ('Weather in {0}:\ntemperature: {1}C, {2}F\n\
-                humidity: {3}%\nweather: {4}').format(loc, tC, tF, hum, status)
-            except Exception as e:
-                print(e)
-                answer = 'error occured while parsing your request, check spelling and make sure you entered location'
-            out_msg = '>>' + count + '\n' + answer
-            post_chat(out_msg, channel, name=config.name, trip=config.Trip,
-                      convo='General', file='')
-
-
-        """
-        """
-        # gets time
-        if re.match(message,'.htime') and message !='':
-            out_msg = out_msg = '>>' + count + '\n' + get_time()
-            post_chat(out_msg, channel, name = config.name,trip = config.Trip, convo = 'General', file = '')
-        """
 
         # checks messages for bot commands
         for (k, v) in hbot.answers.iteritems():
@@ -281,3 +234,4 @@ except Exception as e:
 while 1:
     sleep(3)
     tbot.polling(none_stop=True)
+
