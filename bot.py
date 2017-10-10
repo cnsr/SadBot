@@ -25,6 +25,9 @@ import weather2 as wttr
 tbot = telebot.TeleBot(config.token)
 nsfw = False
 
+# loads region codes
+regioncodes = json.load(open('regioncodes.json'))
+
 # if you don't input channel to connect to
 if len(sys.argv) < 2:
     print("Usage: python bot.py [channel]")
@@ -139,7 +142,7 @@ def process_chat(*args):
             try:
                 w = wreq.group(2)
                 if not w:
-                    w = country_name
+                    w = regioncodes[country]
                 if re.match('us', country[:2].lower()):
                     wttr.weather(w, murrica=False)
                 else:
