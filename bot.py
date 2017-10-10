@@ -188,7 +188,8 @@ def process_chat(*args):
 
             # this doesnt work smh
             try:
-                tbot.send_message(config.user_id, msg)
+                if extension != '.webm':
+                    tbot.send_message(config.user_id, msg)
                 # will only send images if they exist and nsfw is off
                 if out_image != '' and not nsfw and extension != '':
                     if extension not in ['.webm', '.gif', '.ogg', '.mp3', '.mp4']:
@@ -211,6 +212,12 @@ def process_chat(*args):
                         video = open('out.mp4', 'rb')
                         tbot.send_video(config.user_id, video)
                         video.close()
+                    if extension == '.webm':
+                        url = args[0]['image'].replace('/home/ph/livechan-js/public/', 'https://kotchan.org/')
+                        msg += '\n' + url
+                        tbot.send_message(config.user_id, msg)
+
+
             except Exception as e:
                 ree = '----------\n' + str(e) + '\n-----------'
                 tbot.send_message(config.user_id, ree)
