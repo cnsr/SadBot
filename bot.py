@@ -21,7 +21,7 @@ from bs4 import BeautifulSoup, Comment
 from randomcat import cat as rkot
 from imgur import cat as rkit
 import weather2 as wttr
-
+from crypto import crypto
 tbot = telebot.TeleBot(config.token)
 nsfw = False
 
@@ -97,6 +97,13 @@ def process_chat(*args):
             random.shuffle(hbot.ball)
             mesg = random.choice(hbot.ball)
             post_chat('>>' + count + '\n' + mesg, channel, name=config.name, trip=config.Trip, convo='General', file='')
+
+        # matches cryptocurrencies, returns their name
+        if re.match('^[$][a-zA-Z]+$', message):
+            msg = crypto(message[1:])
+            if msg:
+                post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
+
 
         # really shitty time scraper that is disabled right now btw
         def get_time():
@@ -226,6 +233,7 @@ def process_chat(*args):
                 tbot.send_message(config.user_id, ree)
     except Exception as e2:
         print('Exception e2: ' + str(e2))
+        print(args[0])
 
 # i guess this is better to have than not to?
 try:
