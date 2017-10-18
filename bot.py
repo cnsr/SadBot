@@ -21,7 +21,7 @@ from bs4 import BeautifulSoup, Comment
 from randomcat import cat as rkot
 from imgur import cat as rkit
 import weather2 as wttr
-from crypto import crypto
+from crypto import crypto, money
 tbot = telebot.TeleBot(config.token)
 nsfw = False
 
@@ -142,9 +142,24 @@ def process_chat(*args):
         # in case it fucks up and sends empty message 
         help_msg = 'no help message defined'
 
+        # money getter
+        mreq = re.compile('\.(m|money) (.+)').match(message)
+        if mreq:
+            try:
+                m = mreq.group(2).upper().split(' ')
+                if not m[0].isnumeric():
+                    m = [1] + m
+                msg = money(m)
+                if msg:
+                    post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
+            except Exception as e:
+                print(e)
+
+
+
         # gets weather, sometimes off
         # could be cleaned up but i won't bother right now
-        wreq = re.compile('\@weather( (.+))?').match(message)
+        wreq = re.compile('\@(w|weather)( (.+))?').match(message)
         if wreq:
             try:
                 w = wreq.group(2)
