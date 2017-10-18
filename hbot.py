@@ -15,12 +15,12 @@ ball = ['it is certain', 'it is decidedly so', 'without a doubt', 'yes definitel
 
 
 def get_time3():
-	today = datetime.date.today()
-	return (str(today.strftime('Today is %d %b %Y.')))
+    today = datetime.date.today()
+    return (str(today.strftime('Today is %d %b %Y.')))
 
 
 def get_time2():
-	return (strftime('Time in GMT: %H:%M:%S', gmtime()))
+    return (strftime('Time in GMT: %H:%M:%S', gmtime()))
 
 
 answers = {
