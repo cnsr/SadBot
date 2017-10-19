@@ -251,20 +251,27 @@ def process_chat(*args):
         print(args[0])
 
 # i guess this is better to have than not to?
-try:
-    login(callback=process_chat)
-    join_chat(channel)
-    print('Joined chat')
-    # init msg to make bot work
-    # it doesnt smh lel
-    tbot.send_message(config.user_id, 'Joined chat.')
-except Exception as e:
-    print("Connection failed. Error message:")
-    print(e)
+while True:
+    try:
+        login(callback=process_chat)
+        join_chat(channel)
+        print('Joined chat')
+        # init msg to make bot work
+        # it doesnt smh lel
+        tbot.send_message(config.user_id, 'Joined chat.')
+    except Exception as e:
+        print("Connection failed. Error message:")
+        print(e)
+        pass
+    else:
+        break
 
 # makes bot work and tbot polls endlessly(at least while no errors occur)
 # and they do a lot
 while 1:
-    sleep(3)
-    tbot.polling(none_stop=True)
+    try:
+        sleep(3)
+        tbot.polling(none_stop=True)
+    except:
+        pass
 
