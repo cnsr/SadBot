@@ -21,7 +21,7 @@ from bs4 import BeautifulSoup, Comment
 from randomcat import cat as rkot
 from imgur import cat as rkit
 import weather2 as wttr
-from crypto import crypto, money
+from crypto import crypto, money, detailed
 from htranslate import translate as ht
 tbot = telebot.TeleBot(config.token)
 nsfw = False
@@ -99,11 +99,17 @@ def process_chat(*args):
             mesg = random.choice(hbot.ball)
             post_chat('>>' + count + '\n' + mesg, channel, name=config.name, trip=config.Trip, convo='General', file='')
 
-        # matches cryptocurrencies, returns their name
+        # matches cryptocurrencies, returns their data
+        if re.match('^[#][a-zA-Z]+$', message):
+            msg = detailed(message[1:])
+            if msg:
+                post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
+
         if re.match('^[$][a-zA-Z]+$', message):
             msg = crypto(message[1:])
             if msg:
                 post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
+
 
 
         # really shitty time scraper that is disabled right now btw

@@ -1,4 +1,4 @@
-import requests, re, json, urllib
+import requests, re, json, urllib, random
 
 api = 'https://min-api.cryptocompare.com/data/'
 base = 'https://www.cryptocompare.com'
@@ -52,4 +52,21 @@ def money(m):
             return answer
     except:
         return 'Error occured. Make sure you entered request in format ".m (amount) currency (to/in) (currency2)))"'
+
+
+def detailed(curr):
+    curr = curr.upper()
+    answer = 'Data on ' + curr + '/USD from CCCAGG:'
+    link = 'https://www.cryptocompare.com/api/data/coinsnapshot/?fsym=' + curr + '&tsym=USD'
+    try:
+        r = requests.get(link)
+        x = json.loads(r.text)
+        pick = x['Data']["AggregatedData"]
+        for k, v in pick.iteritems():
+            for x in ['PRICE', 'OPEN24HOUR', 'HIGH24HOUR', 'LOW24HOUR',]:
+                if str(k) == str(x):
+                    answer = answer + '\n' + str(k) + ' ' + str(v)
+        return answer
+    except:
+        pass
 
