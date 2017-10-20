@@ -22,6 +22,7 @@ from randomcat import cat as rkot
 from imgur import cat as rkit
 import weather2 as wttr
 from crypto import crypto, money
+from htranslate import translate as ht
 tbot = telebot.TeleBot(config.token)
 nsfw = False
 
@@ -173,6 +174,16 @@ def process_chat(*args):
                       convo='General', file='weather.png')
             except Exception as e:
                 print(str(e))
+
+        # translates text into english
+        treq = re.compile('(\.t )([\s\S]+)').match(message)
+        if treq:
+            try:
+                msg = ht(treq.group(2))
+                post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
+            except Exception as e:
+                print(str(e))
+
 
         # checks messages for bot commands
         for (k, v) in hbot.answers.iteritems():
