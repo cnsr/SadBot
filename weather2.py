@@ -12,6 +12,7 @@ def weather(location, **kwargs):
         urllib.urlretrieve(l, 'weather.png')
         img = Image.open('weather.png')
         width, h = img.size
-        img = img.crop((0, 0, width - 165, h))
+        if not width - 165 < 200:
+            img = img.crop((0, 0, width - 165, h))
         img.save('weather.png')
 

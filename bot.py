@@ -156,10 +156,9 @@ def process_chat(*args):
                 print(e)
 
 
-
         # gets weather, sometimes off
         # could be cleaned up but i won't bother right now
-        wreq = re.compile('\@(w|weather)( (.+))?').match(message)
+        wreq = re.compile('\@(weather|w)( (.+))?').match(message)
         if wreq:
             try:
                 w = wreq.group(2)
