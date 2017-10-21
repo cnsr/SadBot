@@ -110,42 +110,6 @@ def process_chat(*args):
             if msg:
                 post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
 
-
-
-        # really shitty time scraper that is disabled right now btw
-        def get_time():
-            c = ''
-            result = ''
-            result_time = ''
-            for char in country:
-                if char.isalpha():
-                    c += char
-            c = c[:2]
-            url = base_url + c + '.aspx'
-            r = Opener().open(url)
-            soup = BeautifulSoup(r, 'lxml')
-            # gets time
-            time_comments = soup.findAll(text=lambda text: isinstance(text, Comment))
-            for x in time_comments:
-                y = ''
-                for char in x:
-                    if char != ' ':
-                        y += char
-                if re.match('ServerTimewithseconds:', y):
-                    result = y
-            for char in result:
-                if not char.isalpha():
-                    result_time += char
-            result_time = result_time[1:]
-            # gets city + country
-            city_found = soup.find('h1', {'class': 'placeNameH1'})
-            city = city_found.text
-            # cleaning up city output
-            city = re.sub('\s+', '', city)
-            city = ' '.join(re.findall('[A-Z][^A-Z]*', city))
-            # prints result
-            return 'Time in {0} is {1}'.format(city, result_time)
-
         # in case it fucks up and sends empty message 
         help_msg = 'no help message defined'
 
