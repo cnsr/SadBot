@@ -20,6 +20,7 @@ import urllib
 from bs4 import BeautifulSoup, Comment
 from randomcat import cat as rkot
 from imgur import cat as rkit
+from twitter import kat as rkat
 import weather2 as wttr
 from crypto import crypto, money, detailed
 from htranslate import translate as ht
@@ -91,7 +92,7 @@ def process_chat(*args):
         # scrapes and returns a random cat image/gif from random.cat
         if re.match('^[.]kit$', message):
             msg = '>>' + count
-            f = random.choice([rkot, rkit, rkot])()
+            f = random.choice([rkot, rkit, rkot, rkat])()
             post_chat(msg, channel, name=config.name, trip=config.Trip, convo='General', file=f)
 
         # returns one of many 8ball messages
