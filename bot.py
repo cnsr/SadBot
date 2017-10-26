@@ -23,6 +23,7 @@ from imgur import cat as rkit
 import weather2 as wttr
 from crypto import crypto, money, detailed
 from htranslate import translate as ht
+from tts import tts
 tbot = telebot.TeleBot(config.token)
 nsfw = False
 
@@ -153,6 +154,15 @@ def process_chat(*args):
                 post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
             except Exception as e:
                 print(str(e))
+
+        ttsreq = re.compile('([.]tts )([\s\S]+)').match(message)
+        if ttsreq:
+            try:
+                tts(ttsreq.group(2))
+                post_chat('>>' + count, channel, name=config.name, trip=config.Trip, convo='General', file='tts.ogg')
+            except Exception as e:
+                print(str(e))
+
 
 
         # checks messages for bot commands
