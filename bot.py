@@ -133,7 +133,7 @@ def process_chat(*args):
         help_msg = 'no help message defined'
 
         # money getter
-        mreq = re.compile('\.(m|money )(.+)').match(message)
+        mreq = re.compile('\.(m|money) (.+)').match(message)
         if mreq:
             try:
                 m = mreq.group(2).upper().split(' ')
