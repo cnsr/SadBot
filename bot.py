@@ -209,7 +209,7 @@ def process_chat(*args):
                       trip=config.Trip, convo='General', file='in.jpg')
 
         # only sends posts from 'General' conversation
-        if convo == "General":
+        if convo == "General" and not name.endswith('_'):
             if "image" in args[0].keys():
                 out_image = args[0]["image"]
                 if args[0]["image_filename"].startswith('anna'):
