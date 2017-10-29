@@ -6,7 +6,7 @@ def cat():
     imgur_link = 'https://imgur.com'
     cats = 'https://imgur.com/r/cats'
     r = requests.get(cats)
-    soup= bs(r.text, 'lxml')
+    soup = bs(r.text, 'lxml')
     links = soup.findAll('a', {'class': 'image-list-link'})
     hrefs = []
     for x in links:

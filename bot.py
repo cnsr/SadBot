@@ -25,6 +25,7 @@ import weather2 as wttr
 from crypto import crypto, money, detailed
 from htranslate import translate as ht
 from tts import tts
+from switcher import switch, switchback
 tbot = telebot.TeleBot(config.token)
 nsfw = False
 
@@ -107,16 +108,32 @@ def process_chat(*args):
             if msg:
                 post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
 
+        # matches crypto but just returns price data
         if re.match('^[$][a-zA-Z]+$', message):
             msg = crypto(message[1:])
             if msg:
                 post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
 
+        # returns punto switcher-like string if someone fucked up and typed in russian
+        sreq = re.compile('\.(sw|switch) ([\s\S]+)').match(message)
+        if sreq:
+            msg = switch(sreq.group(2))
+            if msg:
+                post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
+
+        # same but from english
+        ssreq = re.compile('\.(bs|bswitch) ([\s\S]+)').match(message)
+        if ssreq:
+            msg = switchback(ssreq.group(2))
+            if msg:
+                post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
+
+
         # in case it fucks up and sends empty message 
         help_msg = 'no help message defined'
 
         # money getter
-        mreq = re.compile('\.(m|money) (.+)').match(message)
+        mreq = re.compile('\.(m|money )(.+)').match(message)
         if mreq:
             try:
                 m = mreq.group(2).upper().split(' ')
