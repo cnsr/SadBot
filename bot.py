@@ -91,7 +91,7 @@ def process_chat(*args):
             extension = ''
 
         # scrapes and returns a random cat image/gif from random.cat
-        if re.match('^[.]kit$', message):
+        if re.match('^[.](kit|whale)$', message):
             msg = '>>' + count
             f = random.choice([rkot, rkit, rkot, rkat])()
             post_chat(msg, channel, name=config.name, trip=config.Trip, convo='General', file=f)
