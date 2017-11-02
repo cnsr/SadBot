@@ -26,6 +26,7 @@ from crypto import crypto, money, detailed
 from htranslate import translate as ht
 from tts import tts
 from switcher import switch, switchback
+from pydick import meaning
 tbot = telebot.TeleBot(config.token)
 nsfw = False
 
@@ -144,6 +145,12 @@ def process_chat(*args):
                     post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
             except Exception as e:
                 print(e)
+
+
+        meanreq = re.compile('\.(meaning|dict|d) (\D+)').match(message)
+        if meanreq:
+            msg = meaning(meanreq.group(2))
+            post_chat('>>' + count + '\n' + msg, channel, name=config.name, trip=config.Trip, convo='General', file='')
 
 
         # gets weather, sometimes off

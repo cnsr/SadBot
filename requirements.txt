@@ -19,3 +19,4 @@ websocket-client==0.40.0
 wheel==0.24.0
 gTTS==1.2.2
 tweepy==3.5.0
+PyDictionary==1.5.2
